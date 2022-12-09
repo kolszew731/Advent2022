@@ -7,24 +7,24 @@ def sign(number):
     else:
         return 0
 
-class Position:
+class Element:
 
     def __init__(self):
-        self.__positions = set()
+        self.discovered_positions = set()
         self.x = 0
         self.y = 0
-        self.move_to_pos(0, 0)
+        self.move_to_position(0, 0)
 
-    def move_to_pos(self, new_x, new_y):
-        new_position_key = "" + str(new_x) + "," + str(new_y)
-        self.__positions.add(new_position_key)
+    def move_to_position(self, new_x, new_y):
+        new_position_identifier = "" + str(new_x) + "," + str(new_y)
+        self.discovered_positions.add(new_position_identifier)
         self.x = new_x
         self.y = new_y
 
     def count_positions_discovered(self):
-        return len(self.__positions)
+        return len(self.discovered_positions)
 
-    def move_to(self, direction):
+    def move_to_direction(self, direction):
         if direction == "R":
             self.x += 1
         elif direction == "L":
@@ -34,15 +34,15 @@ class Position:
         elif direction == "D":
             self.y += 1
 
-    def x_distance(self, other_position):
-        return other_position.x - self.x
+    def x_distance(self, other_element):
+        return other_element.x - self.x
 
-    def y_distance(self, other_position):
-        return other_position.y - self.y
+    def y_distance(self, other_element):
+        return other_element.y - self.y
 
-    def move_after(self, position_to_track):
-        distance_x = self.x_distance(position_to_track)
-        distance_y = self.y_distance(position_to_track)
+    def move_after(self, element_to_track):
+        distance_x = self.x_distance(element_to_track)
+        distance_y = self.y_distance(element_to_track)
         move_to_x = 0
         move_to_y = 0
         if abs(distance_x) == 2:
@@ -53,20 +53,22 @@ class Position:
             move_to_y = sign(distance_y)
             if abs(distance_x) == 1:
                 move_to_x = sign(distance_x)
-        self.move_to_pos(self.x + move_to_x, self.y + move_to_y)
+        self.move_to_position(self.x + move_to_x, self.y + move_to_y)
 
 
 class Rope:
-    __head_position = Position()
-    __tail_position = Position()
+
+    def __init__(self):
+        self.head_element = Element()
+        self.tail_element = Element()
 
     def move_head(self, direction, steps):
         for step in range(steps):
-            self.__head_position.move_to(direction)
-            self.__tail_position.move_after(self.__head_position)
+            self.head_element.move_to_direction(direction)
+            self.tail_element.move_after(self.head_element)
 
     def count_positions_discovered_by_tail(self):
-        return self.__tail_position.count_positions_discovered()
+        return self.tail_element.count_positions_discovered()
 
 
 def solve():
