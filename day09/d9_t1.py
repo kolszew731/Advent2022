@@ -40,8 +40,6 @@ class Position:
     def y_distance(self, other_position):
         return other_position.y - self.y
 
-
-
     def move_after(self, position_to_track):
         distance_x = self.x_distance(position_to_track)
         distance_y = self.y_distance(position_to_track)
@@ -57,6 +55,7 @@ class Position:
                 move_to_x = sign(distance_x)
         self.move_to_pos(self.x + move_to_x, self.y + move_to_y)
 
+
 class Rope:
     __head_position = Position()
     __tail_position = Position()
@@ -66,7 +65,6 @@ class Rope:
             self.__head_position.move_to(direction)
             self.__tail_position.move_after(self.__head_position)
 
-
     def count_positions_discovered_by_tail(self):
         return self.__tail_position.count_positions_discovered()
 
@@ -75,12 +73,10 @@ def solve():
     rope = Rope()
     with open('input.txt') as f:
         lines = f.readlines()
-
     for line in lines:
         line = line.strip()
         command = line.split(" ")
         rope.move_head(command[0], int(command[1]))
-
     print(rope.count_positions_discovered_by_tail())
 
 if __name__ == '__main__':

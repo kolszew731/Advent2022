@@ -75,12 +75,10 @@ def solve():
     rope = Rope()
     with open('input.txt') as f:
         lines = f.readlines()
-
     for line in lines:
         line = line.strip()
         command = line.split(" ")
         rope.move_head(command[0], int(command[1]))
-
     print(rope.count_positions_discovered_by_tail())
 
 if __name__ == '__main__':
