@@ -16,7 +16,6 @@ def solve():
                 dir_name = "/".join(pwd)
                 if dir_name not in dir_sizes:
                     dir_sizes[dir_name] = 0
-
         if line[0].isdigit():
             line = line.split(" ")[0]
             file_size = int(line)
@@ -27,6 +26,7 @@ def solve():
                 pwd_copy.pop()
     dir_sizes = {k:v for (k, v) in dir_sizes.items() if v < 100000}
     print(sum(dir_sizes.values()))
+
 
 if __name__ == '__main__':
     solve()
